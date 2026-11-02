@@ -1,0 +1,82 @@
+// Base Class: Person
+class Person {
+    String name;
+    int age;
+
+    // Parameterized Constructor
+    public Person(String name, int age) {
+        System.out.println("Person constructor executed.");
+        this.name = name;
+        this.age = age;
+    }
+
+    // Display Method
+    public void display() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+// Intermediate Class: Employee inherits Person
+class Employee extends Person {
+    String employeeID;
+    double basicSalary;
+
+    // Parameterized Constructor
+    public Employee(String name, int age, String employeeID, double basicSalary) {
+        // Invoking parent (Person) constructor using super()
+        super(name, age); 
+        System.out.println("Employee constructor executed.");
+        this.employeeID = employeeID;
+        this.basicSalary = basicSalary;
+    }
+
+    // Overridden Display Method
+    @Override
+    public void display() {
+        super.display(); // Call parent display
+        System.out.println("Employee ID: " + employeeID);
+        System.out.println("Basic Salary: $" + basicSalary);
+    }
+}
+
+// Derived Class: Manager inherits Employee
+class Manager extends Employee {
+    String department;
+    double bonus;
+
+    // Parameterized Constructor
+    public Manager(String name, int age, String employeeID, double basicSalary, String department, double bonus) {
+        // Invoking parent (Employee) constructor using super()
+        super(name, age, employeeID, basicSalary);
+        System.out.println("Manager constructor executed.");
+        this.department = department;
+        this.bonus = bonus;
+    }
+
+    // Method to calculate total salary
+    public double calculateTotalSalary() {
+        return basicSalary + bonus;
+    }
+
+    // Overridden Display Method
+    @Override
+    public void display() {
+        super.display(); // Call parent display
+        System.out.println("Department: " + department);
+        System.out.println("Bonus: $" + bonus);
+        System.out.println("Total Salary: $" + calculateTotalSalary());
+    }
+}
+
+// Main class to run the program
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Creating a Manager Object ---");
+        // Creating a Manager object triggers the constructor chain
+        Manager mgr = new Manager("Alice Smith", 35, "MGR1042", 75000.0, "IT Operations", 12000.0);
+        
+        System.out.println("\n--- Displaying Manager Details ---");
+        mgr.display();
+    }
+}
