@@ -1,0 +1,143 @@
+// Main.java - College Management System Demonstration
+import java.util.ArrayList;
+
+// Parent Class
+class Person {
+    // 1. Private fields for controlled access
+    private String name;
+    private int age;
+
+    // 3. Static count of all people created
+    private static int personCount = 0;
+
+    // 4. Final constant for a common institutional value
+    public static final String COLLEGE_NAME = "Global Tech University";
+
+    // Constructor using super() implicitly or explicitly
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+        personCount++; // Increment static counter every time a Person (or subclass) is created
+    }
+
+    // Public getters and setters for controlled access
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    public static int getPersonCount() { return personCount; }
+
+    // Method to be overridden
+    public void displayDetails() {
+        System.out.println("Institution: " + COLLEGE_NAME);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+
+    // 6. Overloaded method (Same name, different parameters)
+    public void displayDetails(String greeting) {
+        System.out.println(greeting);
+        displayDetails();
+    }
+}
+
+// Subclass 1: Student
+class Student extends Person {
+    private String studentId;
+    private String major;
+
+    public Student(String name, int age, String studentId, String major) {
+        super(name, age); // 2. Using super() to invoke parent constructor
+        this.studentId = studentId;
+        this.major = major;
+    }
+
+    // Overriding displayDetails()
+    @Override
+    public void displayDetails() {
+        super.displayDetails();
+        System.out.println("Role: Student | ID: " + studentId + " | Major: " + major);
+        System.out.println("-----------------------------------");
+    }
+}
+
+// Subclass 2: Faculty
+class Faculty extends Person {
+    private String employeeId;
+    private Department dept; // Using the nested class
+
+    // 7. Nested class to represent a college department
+    public static class Department {
+        private String deptName;
+        private String building;
+
+        public Department(String deptName, String building) {
+            this.deptName = deptName;
+            this.building = building;
+        }
+
+        public String getDeptDetails() {
+            return deptName + " (Building: " + building + ")";
+        }
+    }
+
+    public Faculty(String name, int age, String employeeId, String deptName, String building) {
+        super(name, age);
+        this.employeeId = employeeId;
+        this.dept = new Department(deptName, building); // Initializing nested class
+    }
+
+    // Overriding displayDetails()
+    @Override
+    public void displayDetails() {
+        super.displayDetails();
+        System.out.println("Role: Faculty | Employee ID: " + employeeId + " | Department: " + dept.getDeptDetails());
+        System.out.println("-----------------------------------");
+    }
+}
+
+// Subclass 3: Administrator
+class Administrator extends Person {
+    private String roleTitle;
+
+    public Administrator(String name, int age, String roleTitle) {
+        super(name, age);
+        this.roleTitle = roleTitle;
+    }
+
+    // Overriding displayDetails()
+    @Override
+    public void displayDetails() {
+        super.displayDetails();
+        System.out.println("Role: Administrator | Title: " + roleTitle);
+        System.out.println("-----------------------------------");
+    }
+}
+
+// Main execution class
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Initializing College Management System ---\n");
+
+        // 5. Store the subclass objects in a Person[] array
+        Person[] collegeDirectory = new Person[3];
+
+        collegeDirectory[0] = new Student("Alice Smith", 20, "S101", "Computer Science");
+        collegeDirectory[1] = new Faculty("Dr. Bob Jones", 45, "F204", "Engineering", "Block A");
+        collegeDirectory[2] = new Administrator("Carol White", 50, "Registrar");
+
+        // 6. Demonstrate run-time polymorphism using displayDetails()
+        System.out.println("=== Displaying Directory Details (Polymorphism) ===");
+        for (Person person : collegeDirectory) {
+            person.displayDetails(); // Dynamic method binding happens here at runtime
+        }
+
+        // Demonstrating overloaded method
+        System.out.println("=== Demonstrating Overloaded Method ===");
+        collegeDirectory[0].displayDetails("Welcome to the new semester!");
+
+        // Displaying total static count
+        System.out.println("\nTotal people registered in system: " + Person.getPersonCount());
+    }
+}
