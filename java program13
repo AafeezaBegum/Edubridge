@@ -1,0 +1,25 @@
+class A {
+    A(int value) {
+        System.out.println("A constructor received: " + value);
+    }
+}
+
+class B extends A {
+    B(int value) {
+        super(value + 10); // Passes a different value up to A
+        System.out.println("B constructor received: " + value);
+    }
+}
+
+class C extends B {
+    C(int value) {
+        super(value * 2); // Passes a different value up to B
+        System.out.println("C constructor received: " + value);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        C obj = new C(5);
+    }
+}
