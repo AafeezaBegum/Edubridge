@@ -1,0 +1,56 @@
+// Parent class
+class Payment {
+    // Base method to be overridden
+    public double calculateAmount(double amount) {
+        return amount; // Base case: no extra fees
+    }
+
+    // Overloaded method in the parent class
+    public double calculateAmount(double amount, double discountPercentage) {
+        double discount = amount * (discountPercentage / 100);
+        return amount - discount;
+    }
+}
+
+// Subclass 1: CardPayment
+class CardPayment extends Payment {
+    @Override
+    public double calculateAmount(double amount) {
+        double cardFee = 2.50; // Flat fee for card transactions
+        return amount + cardFee;
+    }
+}
+
+// Subclass 2: UPIPayment
+class UPIPayment extends Payment {
+    @Override
+    public double calculateAmount(double amount) {
+        double upiTaxRate = 0.01; // 1% fee for UPI transactions
+        return amount + (amount * upiTaxRate);
+    }
+}
+
+// Main class to demonstrate functionality
+public class Main {
+    public static void main(String[] args) {
+        // --- 1. COMPILE-TIME POLYMORPHISM (Method Overloading) ---
+        Payment basePayment = new Payment();
+        
+        // Compiler looks at the arguments to bind the method call
+        System.out.println("--- Compile-Time Resolution (Overloading) ---");
+        System.out.println("Standard Base Amount: " + basePayment.calculateAmount(100.0));
+        System.out.println("Discounted Base Amount (10% off): " + basePayment.calculateAmount(100.0, 10.0));
+        System.out.println();
+
+        // --- 2. RUN-TIME POLYMORPHISM (Method Overriding) ---
+        // Using a parent reference to hold child objects
+        Payment payment1 = new CardPayment();
+        Payment payment2 = new UPIPayment();
+
+        System.out.println("--- Run-Time Resolution (Overriding) ---");
+        // At compile-time, compiler check satisfies Payment reference.
+        // At run-time, JVM looks at the actual object types (CardPayment & UPIPayment).
+        System.out.println("Card Payment Total (with $2.50 fee): " + payment1.calculateAmount(100.0));
+        System.out.println("UPI Payment Total (with 1% fee): " + payment2.calculateAmount(100.0));
+    }
+}
