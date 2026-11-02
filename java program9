@@ -1,0 +1,43 @@
+// Parent Class
+class Vehicle {
+    // A field brand
+    String brand;
+
+    // A constructor that initializes brand
+    public Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    // A method display() that prints vehicle information
+    public void display() {
+        System.out.println("Vehicle Brand: " + this.brand);
+    }
+}
+
+// Child Class
+class Car extends Vehicle {
+    // Its own field brand
+    String brand;
+
+    // A constructor that initializes both fields using super
+    public Car(String parentBrand, String childBrand) {
+        super(parentBrand); // Initializes parent class brand
+        this.brand = childBrand;   // Initializes child class brand
+    }
+
+    // An overridden display() method that uses super.display() and prints the child's brand
+    @Override
+    public void display() {
+        super.display(); // Calls the parent's display method
+        System.out.println("Car Brand: " + this.brand);
+    }
+}
+
+// Main Class to execute and test the code
+public class Main {
+    public static void main(String[] args) {
+        // Creating an instance of Car with different brand values
+        Car myCar = new Car("Toyota", "Camry");
+        myCar.display();
+    }
+}
