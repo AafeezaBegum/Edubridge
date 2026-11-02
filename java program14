@@ -1,0 +1,75 @@
+// Parent class Shape
+class Shape {
+    // Base method to be overridden
+    public void area() {
+        System.out.println("Area formula depends on the specific shape.");
+    }
+}
+
+// Subclass Circle
+class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public void area() {
+        double result = Math.PI * radius * radius;
+        System.out.printf("Circle Area: %.2f\n", result);
+    }
+}
+
+// Subclass Rectangle
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public void area() {
+        double result = length * width;
+        System.out.printf("Rectangle Area: %.2f\n", result);
+    }
+}
+
+// Subclass Triangle
+class Triangle extends Shape {
+    private double base;
+    private double height;
+
+    public Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+
+    @Override
+    public void area() {
+        double result = 0.5 * base * height;
+        System.out.printf("Triangle Area: %.2f\n", result);
+    }
+}
+
+// Main class to demonstrate Run-time Polymorphism
+public class Main {
+    public static void main(String[] args) {
+        // 1. Create an array of Shape references
+        Shape[] shapes = new Shape[3];
+
+        // 2. Store objects of all three subclasses in it (Upcasting)
+        shapes[0] = new Circle(5.0);
+        shapes[1] = new Rectangle(4.0, 6.0);
+        shapes[2] = new Triangle(4.0, 5.0);
+
+        // 3 & 4. Use a loop to call area() for each object and display areas
+        System.out.println("Calculating areas using a unified loop:");
+        for (Shape s : shapes) {
+            s.area(); // Dynamic method dispatch happens here
+        }
+    }
+}
