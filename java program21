@@ -1,0 +1,35 @@
+class Student {
+    String USN;
+    String Name;
+    String Branch;
+    String Phone;
+
+    Student(String usn, String name, String branch, String phone) {
+        USN = usn;
+        Name = name;
+        Branch = branch;
+        Phone = phone;
+    }
+
+    void display() {
+        System.out.println("USN: " + USN);
+        System.out.println("Name: " + Name);
+        System.out.println("Branch: " + Branch);
+        System.out.println("Phone: " + Phone);
+        System.out.println();
+    }
+}
+
+public class Program01_Student {
+    public static void main(String[] args) {
+        Student s1 = new Student("1CI26CS001", "Asha", "CSE", "9876543210");
+        Student s2 = new Student("1CI26CS002", "Rahul", "CSE", "9876543211");
+        Student s3 = new Student("1CI26CS003", "Priya", "CSE", "9876543212");
+
+        System.out.println("Student Details");
+        System.out.println("---------------");
+        s1.display();
+        s2.display();
+        s3.display();
+    }
+}
